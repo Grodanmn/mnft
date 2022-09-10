@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: darkgrey; color: white;">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <input
+            type="button"
+            value="refresh"
+            id="mybtn"
+            style="font-size: 2rem;background-color: deepskyblue;"/>
+        <ul id="myul"></ul>
+        <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+            integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+        <script>
+            var loginUrl = 'https://api2.complex.mn/api/v1/user/login';
+
+            var dataLog = 'U2FsdGVkX196BUBgDbneCDdwVMpTVdJ6pkZx+yJi6eIkzwQS+LTVGDQclZIeBnBfJ8zOkzAFyq7HPD' +
+                    '3RcNkx2SzlhK9SgPsmQfkm/HHRCPd/0ucj0yuvpIOK1lFKM6nj';
+
+            var urls = [
+                'https://api2.complex.mn/api/v1/blockchain/markets/MNFT-MNTC/orderbook', 'https://api2.complex.mn/api/v1/blockchain/markets/USDT-MNTC/orderbook', 'https://api2.complex.mn/api/v1/blockchain/markets/MNFT-USDT/orderbook',
+                // 'https://api2.complex.mn/api/v1/blockchain/markets/ARDX-USDT/orderbook',
+                // 'https://api2.complex.mn/api/v1/blockchain/markets/ARDX-MNTC/orderbook',
+                'https://api2.complex.mn/api/v1/user/get-rate/USDT'
+            ];
+
+            var A4 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+            var b0 = (e = "MTcxNjc2ODAxNzc1NjUK") => {
+                let t = "",
+                    o = "",
+                    n = "",
+                    r = "",
+                    s = "",
+                    i = "",
+                    B = "",
+                    h = "",
+                    a = 0;
+                const E = e.replace(/[^A-Za-z0-9+/=]/g, "");
+                do 
+                    s = A4.indexOf(E.charAt(a++)),
+                    i = A4.indexOf(E.charAt(a++)),
+                    B = A4.indexOf(E.charAt(a++)),
+                    h = A4.indexOf(E.charAt(a++)),
+                    o = s << 2 | i >> 4,
+                    n = (i & 15) << 4 | B >> 2,
+                    r = (B & 3) << 6 | h,
+                    t += String.fromCharCode(o),
+                    B !== 64 && (t += String.fromCharCode(n)),
+                    h !== 64 && (t += String.fromCharCode(r)),
+                    o = n = r = "",
+                    s = i = B = h = "";
+                while (a < E.length);
+                return t
+            };
+
+            var r0 = (e) => CryptoJS
+                .AES
+                .encrypt(JSON.stringify(e), b0())
+                .toString();
+
+            var $4 = (e) => {
+                const t = CryptoJS
+                    .AES
+                    .decrypt(e, b0());
+                return JSON.parse(t.toString(CryptoJS.enc.Utf8))
+            };
+
+            const CallAjax = (opt) => {
+                const xhr = new XMLHttpRequest();
+
+                // listen for `load` event
+                xhr.onload = () => {
+
+                    // print JSON response
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        // parse JSON
+                        const response = JSON.parse(xhr.responseText);
+
+                        if (opt.f) {
+                            opt.f(response)
+                        }
+                    }
+                };
+
+                // open request
+                xhr.open(opt.type, opt.url);
+
+                if (opt.headers) {
+                    opt
+                        .headers
+                        .forEach(header => {
+                            xhr.setRequestHeader(header['name'], header['value']);
+                        })
+                }
+
+                if (opt.data) {
+                    // set `Content-Type` header
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+
+                    // send rquest with JSON payload
+                    xhr.send(JSON.stringify(opt.data));
+                } else {
+                    xhr.send();
+                }
+            };
+
+            var init = () => {
+
+                $('#myul').empty();
+
+                var i = 0,
+                    datos = {};
+
+                urls.forEach(url => {
+
+                    CallAjax({
+                        type: 'GET',
+                        url: url,
+                        f: (res) => {
+                            var result = $4(res.encrypted);
+                            if (result['status'] == 'success') {
+                                var bids,
+                                    asks;
+                                if (url.includes('get-rate/USDT')) {
+                                    datos['WU'] = {
+                                        bid: parseFloat(result['data']['USDT']['sellRate']),
+                                        ask: parseFloat(result['data']['USDT']['buyRate'])
+                                    }
+                                } else {
+                                    bids = result['data']['bid'];
+                                    asks = result['data']['ask'];
+                                }
+                                if (url.includes('MNFT-MNTC')) {
+                                    datos['MM'] = {
+                                        bid: parseFloat(bids[0]['rate']),
+                                        ask: parseFloat(asks[0]['rate']),
+                                        askV: parseFloat(asks[0]['quantity']),
+                                        bidV: parseFloat(bids[0]['quantity']),
+                                        datas: {
+                                            asks: asks,
+                                            bids: bids
+                                        }
+                                    }
+                                } else if (url.includes('MNFT-USDT')) {
+                                    datos['MU'] = {
+                                        bid: parseFloat(bids[0]['rate']),
+                                        ask: parseFloat(asks[0]['rate']),
+                                        askV: parseFloat(asks[0]['quantity']),
+                                        bidV: parseFloat(bids[0]['quantity']),
+                                        datas: {
+                                            asks: asks,
+                                            bids: bids
+                                        }
+                                    }
+                                } else if (url.includes('USDT-MNTC')) {
+                                    datos['UM'] = {
+                                        bid: parseFloat(bids[0]['rate']),
+                                        ask: parseFloat(asks[0]['rate']),
+                                        askV: parseFloat(asks[0]['quantity']),
+                                        bidV: parseFloat(bids[0]['quantity']),
+                                        datas: {
+                                            asks: asks,
+                                            bids: bids
+                                        }
+                                    }
+                                } else if (url.includes('ARDX-MNTC')) {
+                                    datos['AM'] = {
+                                        bid: parseFloat(bids[0]['rate']),
+                                        ask: parseFloat(asks[0]['rate']),
+                                        askV: parseFloat(asks[0]['quantity']),
+                                        bidV: parseFloat(bids[0]['quantity']),
+                                        datas: {
+                                            asks: asks,
+                                            bids: bids
+                                        }
+                                    }
+                                } else if (url.includes('ARDX-USDT')) {
+                                    datos['AU'] = {
+                                        bid: parseFloat(bids[0]['rate']),
+                                        ask: parseFloat(asks[0]['rate']),
+                                        askV: parseFloat(asks[0]['quantity']),
+                                        bidV: parseFloat(bids[0]['quantity']),
+                                        datas: {
+                                            asks: asks,
+                                            bids: bids
+                                        }
+                                    }
+                                }
+                                i++;
+                                if (i == urls.length) {
+                                    console.log(datos)
+                                    var MM = datos.MM;
+                                    var MU = datos.MU;
+                                    var UM = datos.UM;
+                                    var AM = datos.AM;
+                                    var AU = datos.AU;
+                                    var WU = datos.WU;
+
+                                    var tran = 0.9975;
+
+                                    function trade(from, to, value) {
+                                        if (to == 'WALLET') {
+                                            to = 'USDT';
+                                        }
+                                        if (from == 'MNT') {
+                                            if (to == 'MNFT') {
+                                                return (value / MM.ask * tran);
+                                            } else if (to == 'USDT') {
+                                                return (value / UM.ask * tran);
+                                            } else if (to == 'ARDX') {
+                                                return (value / AM.ask * tran);
+                                            }
+                                        } else if (from == 'MNFT') {
+                                            if (to == 'MNT') {
+                                                return (value * MM.bid * tran);
+                                            } else if (to == 'USDT') {
+                                                return (value * MU.bid * tran);
+                                            }
+                                        } else if (from == 'USDT') {
+                                            if (to == 'MNFT') {
+                                                return (value / MU.ask * tran)
+                                            } else if (to == 'MNT') {
+                                                return (value * UM.bid * tran)
+                                            } else if (to == 'ARDX') {
+                                                return (value / AU.ask * tran)
+                                            }
+                                        } else if (from == 'ARDX') {
+                                            if (to == 'MNT') {
+                                                return (value * AM.bid * tran);
+                                            } else if (to == 'USDT') {
+                                                return (value * AU.bid * tran);
+                                            }
+                                        } else if (from == 'WALLET') {
+                                            if (to == 'USDT') {
+                                                return (value / WU.bid);
+                                            } else if (to == 'MNT') {
+                                                return (value * WU.ask);
+                                            }
+                                        }
+                                        console.log('ERROR')
+                                    }
+
+                                    function tradeV1(from, to, value, i) {
+                                        if (to == 'WALLET') {
+                                            to = 'USDT';
+                                        }
+                                        if (from == 'MNT') {
+                                            if (to == 'MNFT') {
+                                                return (value / MM.datas.asks[i]['rate'] * tran);
+                                            } else if (to == 'USDT') {
+                                                return (value / UM.datas.asks[i]['rate'] * tran);
+                                            } else if (to == 'ARDX') {
+                                                return (value / AM.datas.asks[i]['rate'] * tran);
+                                            }
+                                        } else if (from == 'MNFT') {
+                                            if (to == 'MNT') {
+                                                return (value * MM.datas.bids[i]['rate'] * tran);
+                                            } else if (to == 'USDT') {
+                                                return (value * MU.datas.bids[i]['rate'] * tran);
+                                            }
+                                        } else if (from == 'USDT') {
+                                            if (to == 'MNFT') {
+                                                return (value / MU.datas.asks[i]['rate'] * tran)
+                                            } else if (to == 'MNT') {
+                                                return (value * UM.datas.bids[i]['rate'] * tran)
+                                            } else if (to == 'ARDX') {
+                                                return (value / AU.datas.asks[i]['rate'] * tran)
+                                            }
+                                        } else if (from == 'ARDX') {
+                                            if (to == 'MNT') {
+                                                return (value * AM.datas.bids[i]['rate'] * tran);
+                                            } else if (to == 'USDT') {
+                                                return (value * AU.datas.bids[i]['rate'] * tran);
+                                            }
+                                        } else if (from == 'WALLET') {
+                                            if (to == 'USDT') {
+                                                return (value / WU.bid);
+                                            } else if (to == 'MNT') {
+                                                return (value * WU.ask);
+                                            }
+                                        }
+                                        console.log('ERROR')
+                                    }
+
+                                    function tradableValue(from, to) {
+                                        if (from == 'MNT') {
+                                            if (to == 'MNFT') {
+                                                return {
+                                                    from: (MM.ask * MM.askV),
+                                                    to: MM.askV
+                                                }
+                                            } else if (to == 'USDT') {
+                                                return {
+                                                    from: (UM.ask * UM.askV),
+                                                    to: UM.askV
+                                                }
+                                            }
+                                        } else if (from == 'MNFT') {
+                                            if (to == 'MNT') {
+                                                return {
+                                                    from: (MM.bidV),
+                                                    to: (MM.bidV * MM.bid)
+                                                }
+                                            } else if (to == 'USDT') {
+                                                return {
+                                                    from: (MU.bidV),
+                                                    to: (MU.bidV * MU.bid)
+                                                }
+                                            }
+                                        } else if (from == 'USDT') {
+                                            if (to == 'MNFT') {
+                                                return {
+                                                    from: (MU.ask * MU.askV),
+                                                    to: MU.askV
+                                                }
+                                            } else if (to == 'MNT') {
+                                                return {
+                                                    from: (UM.bid * UM.bidV),
+                                                    to: (UM.bidV)
+                                                };
+                                            }
+                                        }
+                                        console.log('ERROR')
+                                    }
+
+                                    function tradableValueV1(from, to, i) {
+                                        if (to == 'WALLET') {
+                                            to = 'USDT'
+                                        }
+                                        if (from == 'WALLET') {
+                                            return {from: 10000000000, to: 100000000000}
+                                        }
+                                        if (from == 'MNT') {
+                                            if (to == 'MNFT') {
+                                                return {
+                                                    from: (MM.datas.asks[i]['rate'] * MM.datas.asks[i]['quantity']),
+                                                    to: MM
+                                                        .datas
+                                                        .asks[i]['quantity']
+                                                }
+                                            } else if (to == 'USDT') {
+                                                return {
+                                                    from: (UM.datas.asks[i]['rate'] * UM.datas.asks[i]['quantity']),
+                                                    to: UM
+                                                        .datas
+                                                        .asks[i]['quantity']
+                                                }
+                                            }
+                                        } else if (from == 'MNFT') {
+                                            if (to == 'MNT') {
+                                                return {
+                                                    from: (MM.datas.bids[i]['quantity']),
+                                                    to: (MM.datas.bids[i]['quantity'] * MM.datas.bids[i]['rate'])
+                                                }
+                                            } else if (to == 'USDT') {
+                                                return {
+                                                    from: (MU.datas.bids[i]['quantity']),
+                                                    to: (MU.datas.bids[i]['quantity'] * MU.datas.bids[i]['rate'])
+                                                }
+                                            }
+                                        } else if (from == 'USDT') {
+                                            if (to == 'MNFT') {
+                                                return {
+                                                    from: (MU.datas.asks[i]['rate'] * MU.datas.asks[i]['quantity']),
+                                                    to: MU
+                                                        .datas
+                                                        .asks[i]['quantity']
+                                                }
+                                            } else if (to == 'MNT') {
+                                                return {
+                                                    from: (UM.datas.bids[i]['rate'] * UM.datas.bids[i]['quantity']),
+                                                    to: (UM.datas.bids[i]['quantity'])
+                                                };
+                                            }
+                                        }
+                                        console.log('ERROR')
+                                    }
+
+                                    var MNT = 1;
+                                    var perc = 1;
+
+                                    var countToCall = 10;
+
+                                    function colorChange(value, spot, sp) {
+                                        sp = sp
+                                            ? sp
+                                            : "right";
+                                        if (sp == "right") {
+                                            return '<label ' + (
+                                                value > spot
+                                                    ? 'style="color:green;"'
+                                                    : 'style="color:red;"'
+                                            ) + '>' + parseFloat(value).toFixed(5) + '</label>';
+                                        } else {
+                                            return '<label ' + (
+                                                value < spot
+                                                    ? 'style="color:green;"'
+                                                    : 'style="color:red;"'
+                                            ) + '>' + parseFloat(value).toFixed(5) + '</label>';
+                                        }
+
+                                    }
+
+                                    var texts = []
+
+                                    function TransactionNumber1() {
+
+                                        texts.push('MNT => MNFT => USDT => MNT');
+                                        var transaction1 = trade(
+                                            'USDT',
+                                            'MNT',
+                                            trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT))
+                                        );
+                                        texts.push(colorChange(transaction1, perc));
+
+                                        if (transaction1 > perc) {
+
+                                            var tradingValue1 = tradableValue('MNT', 'MNFT');
+                                            var tradingValue2 = tradableValue('MNFT', 'USDT');
+                                            var tradingValue3 = tradableValue('USDT', 'MNT');
+
+                                            var p = tradingValue1.from;
+                                            var p1_1 = tradingValue1.to;
+                                            var p1_2 = tradingValue2.from;
+                                            var p2_1 = tradingValue2.to;
+                                            var p2_2 = tradingValue3.from;
+
+                                            var p1 = p1_1;
+                                            var p2 = p2_1;
+
+                                            if (p1_2 < p1) {
+                                                p = (p1_2 / p1_1) * p;
+                                                p1 = p1_2;
+                                            }
+
+                                            if (p2_2 < p2_1) {
+                                                p = (p2_2 / p2_1) * p;
+                                                p1 = (p2_2 / p2_1) * p1;
+                                                p2 = p2_2;
+                                            }
+
+                                            texts.push(p + ' MNT');
+
+                                        }
+
+                                    }
+
+                                    TransactionNumber1();
+
+                                    texts.push('MNT => USDT => MNFT => MNT');
+                                    var transaction2 = trade(
+                                        'MNFT',
+                                        'MNT',
+                                        trade('USDT', 'MNFT', trade('MNT', 'USDT', MNT))
+                                    );
+                                    texts.push(colorChange(transaction2, perc));
+
+                                    if (transaction2 > perc) {
+
+                                        var tradingValue1 = tradableValue('MNT', 'USDT');
+                                        var tradingValue2 = tradableValue('USDT', 'MNFT');
+                                        var tradingValue3 = tradableValue('MNFT', 'MNT');
+
+                                        var p = tradingValue1.from;
+                                        var p1_1 = tradingValue1.to;
+                                        var p1_2 = tradingValue2.from;
+                                        var p2_1 = tradingValue2.to;
+                                        var p2_2 = tradingValue3.from;
+
+                                        var p1 = p1_1;
+                                        var p2 = p2_1;
+
+                                        if (p1_2 < p1) {
+                                            p = (p1_2 / p1_1) * p;
+                                            p1 = p1_2;
+                                        }
+
+                                        if (p2_2 < p2_1) {
+                                            p = (p2_2 / p2_1) * p;
+                                            p1 = (p2_2 / p2_1) * p1;
+                                            p2 = p2_2;
+                                        }
+
+                                        texts.push(p + ' MNT');
+
+                                    }
+
+                                    texts.push('MNT => MNFT => WALLET => MNT');
+                                    var transaction4 = trade(
+                                        'WALLET',
+                                        'MNT',
+                                        trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT))
+                                    );
+                                    texts.push(colorChange(transaction4, perc));
+
+                                    if (transaction4 > perc) {
+
+                                        var tradingValue1 = tradableValue('MNT', 'MNFT');
+                                        var tradingValue2 = tradableValue('MNFT', 'USDT');
+
+                                        var p = tradingValue1.from;
+                                        var p1_1 = tradingValue1.to;
+                                        var p1_2 = tradingValue2.from;
+                                        var p2_1 = tradingValue2.to;
+                                        var p2_2 = tradingValue2.to;
+
+                                        var p1 = p1_1;
+                                        var p2 = p2_1;
+
+                                        if (p1_2 < p1) {
+                                            p = (p1_2 / p1_1) * p;
+                                            p1 = p1_2;
+                                        }
+
+                                        if (p2_2 < p2_1) {
+                                            p = (p2_2 / p2_1) * p;
+                                            p1 = (p2_2 / p2_1) * p1;
+                                            p2 = p2_2;
+                                        }
+
+                                        texts.push(p + ' MNT');
+                                    }
+
+                                    texts.push('WALLET => USDT => MNFT => MNT');
+                                    var transaction3 = trade(
+                                        'MNFT',
+                                        'MNT',
+                                        trade('USDT', 'MNFT', trade('WALLET', 'USDT', MNT))
+                                    );
+                                    texts.push(colorChange(transaction3, perc));
+
+                                    if (transaction3 > perc) {
+
+                                        var tradingValue2 = tradableValue('USDT', 'MNFT');
+                                        var tradingValue3 = tradableValue('MNFT', 'MNT');
+
+                                        var p = tradingValue2.from * WU.bid;
+                                        var p1_1 = tradingValue2.from;
+                                        var p1_2 = tradingValue2.from;
+                                        var p2_1 = tradingValue2.to;
+                                        var p2_2 = tradingValue3.from;
+
+                                        var p1 = p1_1;
+                                        var p2 = p2_1;
+
+                                        if (p1_2 < p1) {
+                                            p = (p1_2 / p1_1) * p;
+                                            p1 = p1_2;
+                                        }
+
+                                        if (p2_2 < p2_1) {
+                                            p = (p2_2 / p2_1) * p;
+                                            p1 = (p2_2 / p2_1) * p1;
+                                            p2 = p2_2;
+                                        }
+
+                                        texts.push(p + ' MNT');
+                                    }
+
+                                    // texts.push('MNFT=>WALLET=>MNT=>MNFT');
+                                    var transaction5 = trade(
+                                        'MNT',
+                                        'MNFT',
+                                        trade('WALLET', 'MNT', trade('MNFT', 'USDT', MNT))
+                                    );
+                                    // texts.push(colorChange(transaction5, 1)); texts.push('MNFT=>WALLET=>MNT');
+                                    var transaction6 = trade('WALLET', 'MNT', trade('MNFT', 'USDT', MNT) / MNT);
+                                    // texts.push(colorChange(transaction6, 1));
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    texts.push('WALLET => MNT');
+                                    var transaction7 = trade('WALLET', 'MNT', MNT) / MNT;
+                                    texts.push(colorChange(transaction7, 3350));
+
+                                    texts.push('WALLET => USDT');
+                                    var transaction10 = MNT / trade('WALLET', 'USDT', MNT);
+                                    texts.push(colorChange(transaction10, 3100, "left"));
+
+                                    texts.push('USDT => MNT');
+                                    var transaction11 = trade('USDT', 'MNT', MNT) / MNT;
+                                    texts.push(colorChange(transaction11, 3350));
+
+                                    texts.push('MNT => USDT');
+                                    var transaction12 = MNT / trade('MNT', 'USDT', MNT);
+                                    texts.push(colorChange(transaction12, 3100, 'left'));
+
+                                    texts.push('USDT => MNFT => MNT');
+                                    var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
+                                    texts.push(colorChange(transaction8, 3350));
+
+                                    texts.push('MNT => MNFT => USDT');
+                                    var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
+                                    texts.push(colorChange(transaction9, 3100, 'left'));
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    function TransactionNumberV1(symbols) {
+
+                                        texts.push(`${symbols[0]} => ${symbols[1]} => ${symbols[2]} => ${symbols[3]}`);
+                                        var transaction1 = trade(
+                                            symbols[2],
+                                            symbols[3],
+                                            trade(symbols[1], symbols[2], trade(symbols[0], symbols[1], MNT))
+                                        );
+                                        var doIt = false;
+
+                                        var canbe = [[], [], []];
+                                        var canbeVal = [
+                                            {
+                                                from: 0,
+                                                to: 0
+                                            }, {
+                                                from: 0,
+                                                to: 0
+                                            }, {
+                                                from: 0,
+                                                to: 0
+                                            }
+                                        ];
+
+                                        function trans1F(e1, e2, e3) {
+                                            try {
+                                                var tra = tradeV1(
+                                                    symbols[2],
+                                                    symbols[3],
+                                                    tradeV1(symbols[1], symbols[2], tradeV1(symbols[0], symbols[1], MNT, e1), e2),
+                                                    e3
+                                                );
+                                                if (tra > perc) {
+                                                    return true;
+                                                }
+                                                return false;
+                                            } catch (error) {
+                                                return false;
+                                            }
+
+                                        }
+
+                                        var last = transaction1;
+
+                                        for (var l1 = 0; l1 < countToCall; l1++) {
+                                            for (var l2 = 0; l2 < countToCall; l2++) {
+                                                for (var l3 = 0; l3 < countToCall; l3++) {
+                                                    if (trans1F(l1, l2, l3)) {
+                                                        doIt = true;
+                                                        if (canbe[0].indexOf(l1) < 0) {
+                                                            canbe[0].push(l1);
+                                                            var val = tradableValueV1(symbols[0], symbols[1], l1);
+                                                            canbeVal[0]['from'] += parseFloat(val['from']);
+                                                            canbeVal[0]['to'] += parseFloat(val['to']);
+                                                        }
+                                                        if (canbe[1].indexOf(l2) < 0) {
+                                                            canbe[1].push(l2);
+                                                            var val = tradableValueV1(symbols[1], symbols[2], l2);
+                                                            canbeVal[1]['from'] += parseFloat(val['from']);
+                                                            canbeVal[1]['to'] += parseFloat(val['to']);
+                                                        }
+                                                        if (canbe[2].indexOf(l2) < 0) {
+                                                            canbe[2].push(l2);
+                                                            var val = tradableValueV1(symbols[2], symbols[3], l3);
+                                                            canbeVal[2]['from'] += parseFloat(val['from']);
+                                                            canbeVal[2]['to'] += parseFloat(val['to']);
+                                                        }
+                                                        last = tradeV1(
+                                                            symbols[2],
+                                                            symbols[3],
+                                                            tradeV1(symbols[1], symbols[2], tradeV1(symbols[0], symbols[1], MNT, l1), l2),
+                                                            l3
+                                                        );
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        texts.push(colorChange(last, perc));
+
+                                        if (doIt) {
+
+                                            var tradingValue1 = canbeVal[0];
+                                            var tradingValue2 = canbeVal[1];
+                                            var tradingValue3 = canbeVal[2];
+
+                                            var p = tradingValue1.from;
+                                            var p1_1 = tradingValue1.to;
+                                            var p1_2 = tradingValue2.from;
+                                            var p2_1 = tradingValue2.to;
+                                            var p2_2 = tradingValue3.from;
+
+                                            var p1 = p1_1;
+                                            var p2 = p2_1;
+
+                                            if (p1_2 < p1) {
+                                                p = (p1_2 / p1_1) * p;
+                                                p1 = p1_2;
+                                            }
+
+                                            if (p2_2 < p2_1) {
+                                                p = (p2_2 / p2_1) * p;
+                                                p1 = (p2_2 / p2_1) * p1;
+                                                p2 = p2_2;
+                                            }
+
+                                            texts.push(p.toFixed(5) + ' ' + (
+                                                symbols[0] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : symbols[0]
+                                            ) + ' => ' + (
+                                                p * (last - perc)
+                                            ).toFixed(5));
+
+                                            texts.push(p1.toFixed(5) + ' ' + (
+                                                symbols[1] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : symbols[1]
+                                            ));
+
+                                            texts.push(p2.toFixed(5) + ' ' + (
+                                                symbols[2] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : symbols[2]
+                                            ));
+
+                                        }
+
+                                    }
+
+                                    TransactionNumberV1(['MNT', 'MNFT', 'USDT', 'MNT'])
+
+                                    TransactionNumberV1(['MNT', 'USDT', 'MNFT', 'MNT'])
+
+                                    TransactionNumberV1(['MNT', 'MNFT', 'WALLET', 'MNT'])
+
+                                    TransactionNumberV1(['WALLET', 'USDT', 'MNFT', 'MNT'])
+
+                                    texts.forEach(text => {
+                                        $('#myul').append('<li>' + text + '</li>')
+                                    });
+
+                                    // console.log('MNT=>USDT=>ARDX=>MNT'); console.log(     trade('USDT', 'MNT',
+                                    // trade('ARDX', 'USDT', trade('MNT', 'ARDX', MNT))) )
+                                    // console.log('MNT=>ARDX=>USDT=>MNT'); console.log(     trade('ARDX', 'MNT',
+                                    // trade('USDT', 'ARDX', trade('MNT', 'USDT', MNT))) )
+                                    // console.log('USDT=>MNFT=>MNT'); console.log(1 / trade('MNFT', 'MNT',
+                                    // trade('USDT', 'MNFT', 1))); console.log('USDT=>MNT=>MNFT'); console.log(1 /
+                                    // trade('MNT', 'MNFT', trade('USDT', 'MNT', 1)));
+                                    // console.log('MNFT=>USDT=>MNT') console.log(1 / trade('USDT', 'MNT',
+                                    // trade('MNFT', 'USDT', 1))) console.log('MNFT=>MNT=>USDT'); console.log(1 /
+                                    // trade('MNT', 'USDT', trade('MNFT', 'MNT', 1))) var usdt = trade('MNFT',
+                                    // 'USDT', trade('MNT', 'MNFT', 1)); console.log('MNT=>MNFT=>USDT');
+                                    // console.log(1 / usdt); console.log('buy:' + parseInt(MM.askV));
+                                    // console.log('sell:' + parseInt(MU.bidV)); var mnft = trade('USDT', 'MNFT',
+                                    // trade('MNT', 'USDT', 1)); console.log('MNT=>USDT=>MNFT'); console.log(1 /
+                                    // mnft); var usdt1 = trade('ARDX', 'USDT', trade('MNT', 'ARDX', 1));
+                                    // console.log('MNT=>ARDX=>USDT'); console.log(1 / usdt1); var mnt =
+                                    // trade('ARDX', 'MNT', trade('USDT', 'ARDX', 1));
+                                    // console.log('USDT=>ARDX=>MNT'); console.log(1/mnt);
+                                    // console.log('USDT=>MNFT=>MNT'); console.log(trade('MNFT', 'MNT',
+                                    // trade('USDT', 'MNFT', 1)));
+                                }
+                            }
+                        }
+                    })
+
+                })
+            }
+            init();
+
+            $('#mybtn').on('click', function () {
+                init();
+            })
+
+            // CallAjax({     url: loginUrl,     data: {         encrypted: dataLog     },
+            // f: (res) => {         console.log(res)     },     headers: [         { name:
+            // 'access-control-request-headers',             value: 'content-type,deviceid'
+            // }, {             name: 'access-control-request-method',             value:
+            // 'POST'         }, { name: 'cache-control',             value: 'no-cache' }, {
+            // name: 'origin',             value: 'https://complex.mn'         }, { name:
+            // 'pragma',             value: 'no-cache'         }, {             name:
+            // 'referer',             value: 'https://complex.mn/'         }     ] });
+            // setInterval(() => {     init() }, 600000)
+        </script>
+    </body>
+</html>
