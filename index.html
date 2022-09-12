@@ -120,7 +120,8 @@
             var init = () => {
 
                 $('#myul').empty();
-
+                $('#myul1').empty();
+                
                 var i = 0,
                     datos = {};
 
@@ -749,27 +750,6 @@
                                     texts.forEach(text => {
                                         $('#myul').append('<li>' + text + '</li>')
                                     });
-
-                                    // console.log('MNT=>USDT=>ARDX=>MNT'); console.log(     trade('USDT', 'MNT',
-                                    // trade('ARDX', 'USDT', trade('MNT', 'ARDX', MNT))) )
-                                    // console.log('MNT=>ARDX=>USDT=>MNT'); console.log(     trade('ARDX', 'MNT',
-                                    // trade('USDT', 'ARDX', trade('MNT', 'USDT', MNT))) )
-                                    // console.log('USDT=>MNFT=>MNT'); console.log(1 / trade('MNFT', 'MNT',
-                                    // trade('USDT', 'MNFT', 1))); console.log('USDT=>MNT=>MNFT'); console.log(1 /
-                                    // trade('MNT', 'MNFT', trade('USDT', 'MNT', 1)));
-                                    // console.log('MNFT=>USDT=>MNT') console.log(1 / trade('USDT', 'MNT',
-                                    // trade('MNFT', 'USDT', 1))) console.log('MNFT=>MNT=>USDT'); console.log(1 /
-                                    // trade('MNT', 'USDT', trade('MNFT', 'MNT', 1))) var usdt = trade('MNFT',
-                                    // 'USDT', trade('MNT', 'MNFT', 1)); console.log('MNT=>MNFT=>USDT');
-                                    // console.log(1 / usdt); console.log('buy:' + parseInt(MM.askV));
-                                    // console.log('sell:' + parseInt(MU.bidV)); var mnft = trade('USDT', 'MNFT',
-                                    // trade('MNT', 'USDT', 1)); console.log('MNT=>USDT=>MNFT'); console.log(1 /
-                                    // mnft); var usdt1 = trade('ARDX', 'USDT', trade('MNT', 'ARDX', 1));
-                                    // console.log('MNT=>ARDX=>USDT'); console.log(1 / usdt1); var mnt =
-                                    // trade('ARDX', 'MNT', trade('USDT', 'ARDX', 1));
-                                    // console.log('USDT=>ARDX=>MNT'); console.log(1/mnt);
-                                    // console.log('USDT=>MNFT=>MNT'); console.log(trade('MNFT', 'MNT',
-                                    // trade('USDT', 'MNFT', 1)));
 
                                     MU
                                         .datas
