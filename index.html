@@ -14,6 +14,7 @@
             style="font-size: 2rem;background-color: deepskyblue;"/>
         <ul id="myul"></ul>
         <ul id="myul1"></ul>
+        <input type="number" id="USDTPrice" value="3150" />
         <input type="number" id="mylabel" />
         <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -757,7 +758,7 @@
                                         .forEach((bid, in1) => {
                                             if (in1 < 10) {
 
-                                                var posiblePrice = 1 / ((1 / 3100) / (parseFloat(bid.rate)));
+                                                var posiblePrice = (1 / ((1 / $('#USDTPrice').val()) / (parseFloat(bid.rate))));
 
                                                 $('#myul1').append(
                                                     `<li data-mnft="${parseInt(bid.quantity)}">${parseFloat(bid.rate).toFixed(8)} => ${parseFloat(posiblePrice).toFixed(5)} : ${parseInt(bid.quantity)} MNFT</li>`
