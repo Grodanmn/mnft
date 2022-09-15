@@ -14,8 +14,8 @@
             style="font-size: 2rem;background-color: deepskyblue;"/>
         <ul id="myul"></ul>
         <ul id="myul1"></ul>
-        <input type="number" id="USDTPrice" value="3150" />
-        <input type="number" id="mylabel" />
+        <input type="number" id="USDTPrice" value="3150"/>
+        <input type="number" id="mylabel"/>
         <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -122,7 +122,7 @@
 
                 $('#myul').empty();
                 $('#myul1').empty();
-                
+
                 var i = 0,
                     datos = {};
 
@@ -607,6 +607,16 @@
                                     texts.push('MNT => MNFT => USDT');
                                     var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
                                     texts.push(colorChange(transaction9, 3100, 'left'));
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    texts.push('MNT => USDT => MNFT');
+                                    var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'USDT', MNT));
+                                    texts.push(colorChange(transaction91, 0.06, 'left'));
+
+                                    texts.push('MNT => WALLET => MNFT');
+                                    var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'WALLET', MNT));
+                                    texts.push(colorChange(transaction91, 0.06, 'left'));
 
                                     texts.push('--------------------------------------------------------');
 
