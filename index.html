@@ -14,7 +14,7 @@
             style="font-size: 2rem;background-color: deepskyblue;"/>
         <ul id="myul"></ul>
         <ul id="myul1"></ul>
-        <input type="number" id="USDTPrice" value="3150"/>
+        <input type="number" id="USDTPrice" value="3250"/>
         <input type="number" id="mylabel"/>
         <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -586,27 +586,27 @@
 
                                     texts.push('WALLET => MNT');
                                     var transaction7 = trade('WALLET', 'MNT', MNT) / MNT;
-                                    texts.push(colorChange(transaction7, 3350));
+                                    texts.push(colorChange(transaction7, 3450));
 
                                     texts.push('WALLET => USDT');
                                     var transaction10 = MNT / trade('WALLET', 'USDT', MNT);
-                                    texts.push(colorChange(transaction10, 3100, "left"));
+                                    texts.push(colorChange(transaction10, 3250, "left"));
 
                                     texts.push('USDT => MNT');
                                     var transaction11 = trade('USDT', 'MNT', MNT) / MNT;
-                                    texts.push(colorChange(transaction11, 3350));
+                                    texts.push(colorChange(transaction11, 3450));
 
                                     texts.push('MNT => USDT');
                                     var transaction12 = MNT / trade('MNT', 'USDT', MNT);
-                                    texts.push(colorChange(transaction12, 3100, 'left'));
+                                    texts.push(colorChange(transaction12, 3250, 'left'));
 
                                     texts.push('USDT => MNFT => MNT');
                                     var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
-                                    texts.push(colorChange(transaction8, 3350));
+                                    texts.push(colorChange(transaction8, 3450));
 
                                     texts.push('MNT => MNFT => USDT');
                                     var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
-                                    texts.push(colorChange(transaction9, 3100, 'left'));
+                                    texts.push(colorChange(transaction9, 3250, 'left'));
 
                                     texts.push('--------------------------------------------------------');
 
