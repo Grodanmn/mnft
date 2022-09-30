@@ -14,7 +14,7 @@
             style="font-size: 2rem;background-color: deepskyblue;"/>
         <ul id="myul"></ul>
         <ul id="myul1"></ul>
-        <input type="number" id="USDTPrice" value="3300"/>
+        <input type="number" id="USDTPrice" value="3400"/>
         <input type="number" id="mylabel"/>
         <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -97,7 +97,7 @@
                         "GgS+w0ZLTFCMUK0h77OomcuqiBWSUzs6V4cevrXPZH/XsWqRo+JmfX5mM5Ty69TsYi/g5mbcHD80FB" +
                         "KqDQVf76dnzkqVSBAhUWobycY2wFnu8b9RxJ"
             };
-            
+
             function getCookie(cname) {
                 let name = cname + "=";
                 let decodedCookie = decodeURIComponent(document.cookie);
@@ -624,41 +624,44 @@
                                     var transaction6 = trade('WALLET', 'MNT', trade('MNFT', 'USDT', MNT) / MNT);
                                     // texts.push(colorChange(transaction6, 1));
 
+                                    var usdtBuy = 3400;
+                                    var usdtSell = 3600;
+
                                     texts.push('--------------------------------------------------------');
 
                                     texts.push('WALLET => MNT');
                                     var transaction7 = trade('WALLET', 'MNT', MNT) / MNT;
-                                    texts.push(colorChange(transaction7, 3500));
+                                    texts.push(colorChange(transaction7, usdtSell));
 
                                     texts.push('WALLET => USDT');
                                     var transaction10 = MNT / trade('WALLET', 'USDT', MNT);
-                                    texts.push(colorChange(transaction10, 3350, "left"));
+                                    texts.push(colorChange(transaction10, usdtBuy, "left"));
 
                                     texts.push('USDT => MNT');
                                     var transaction11 = trade('USDT', 'MNT', MNT) / MNT;
-                                    texts.push(colorChange(transaction11, 3500));
+                                    texts.push(colorChange(transaction11, usdtSell));
 
                                     texts.push('MNT => USDT');
                                     var transaction12 = MNT / trade('MNT', 'USDT', MNT);
-                                    texts.push(colorChange(transaction12, 3350, 'left'));
+                                    texts.push(colorChange(transaction12, usdtBuy, 'left'));
 
                                     texts.push('USDT => MNFT => MNT');
                                     var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
-                                    texts.push(colorChange(transaction8, 3500));
+                                    texts.push(colorChange(transaction8, usdtSell));
 
                                     texts.push('MNT => MNFT => USDT');
                                     var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
-                                    texts.push(colorChange(transaction9, 3350, 'left'));
+                                    texts.push(colorChange(transaction9, usdtBuy, 'left'));
 
                                     texts.push('--------------------------------------------------------');
 
                                     texts.push('MNT => USDT => MNFT');
                                     var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'USDT', MNT));
-                                    texts.push(colorChange(transaction91, 0.05, 'left'));
+                                    texts.push(colorChange(transaction91, 0.04, 'left'));
 
                                     texts.push('MNT => WALLET => MNFT');
                                     var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'WALLET', MNT));
-                                    texts.push(colorChange(transaction91, 0.05, 'left'));
+                                    texts.push(colorChange(transaction91, 0.04, 'left'));
 
                                     texts.push('--------------------------------------------------------');
 
