@@ -624,6 +624,120 @@
                                     var transaction6 = trade('WALLET', 'MNT', trade('MNFT', 'USDT', MNT) / MNT);
                                     // texts.push(colorChange(transaction6, 1));
 
+                                    function TransactionNumberV54123(this_symbols, this_prece, this_l) {
+                                        var doIt = false;
+
+                                        function trans2F(symbols, prece, l, e1, e2) {
+                                            try {
+
+                                                if (l) {
+                                                    var tra = MNT / tradeV1(
+                                                        symbols[1],
+                                                        symbols[2],
+                                                        tradeV1(symbols[0], symbols[1], MNT, e1),
+                                                        e2
+                                                    );
+
+                                                    if (tra <= prece) {
+                                                        return true;
+                                                    }
+                                                } else {
+                                                    var tra = tradeV1(
+                                                        symbols[1],
+                                                        symbols[2],
+                                                        tradeV1(symbols[0], symbols[1], MNT, e1),
+                                                        e2
+                                                    );
+
+                                                    if (tra >= prece) {
+                                                        return true;
+                                                    }
+                                                }
+                                                return false;
+                                            } catch (error) {
+                                                return false;
+                                            }
+
+                                        }
+
+                                        var canbe = [[], []];
+                                        var canbeVal = [
+                                            {
+                                                from: 0,
+                                                to: 0
+                                            }, {
+                                                from: 0,
+                                                to: 0
+                                            }
+                                        ];
+
+                                        var fr = countToCall;
+
+                                        var last = null;
+
+                                        for (var l1 = 0; l1 < fr; l1++) {
+                                            for (var l2 = 0; l2 < fr; l2++) {
+
+                                                var tre = trans2F([
+                                                    this_symbols[0], this_symbols[1], this_symbols[2]
+                                                ], this_prece, this_l, l1, l2);
+
+                                                if (tre) {
+                                                    doIt = true;
+                                                    if (canbe[0].indexOf(l1) < 0) {
+                                                        canbe[0].push(l1);
+                                                        var val = tradableValueV1(this_symbols[0], this_symbols[1], l1);
+                                                        canbeVal[0]['from'] += parseFloat(val['from']);
+                                                        canbeVal[0]['to'] += parseFloat(val['to']);
+                                                    }
+                                                    if (canbe[1].indexOf(l2) < 0) {
+                                                        canbe[1].push(l2);
+                                                        var val = tradableValueV1(this_symbols[1], this_symbols[2], l2);
+                                                        canbeVal[1]['from'] += parseFloat(val['from']);
+                                                        canbeVal[1]['to'] += parseFloat(val['to']);
+                                                    }
+                                                    last = tradeV1(
+                                                        this_symbols[1],
+                                                        this_symbols[2],
+                                                        tradeV1(this_symbols[0], this_symbols[1], MNT, l1),
+                                                        l2
+                                                    );
+
+                                                }
+                                            }
+                                        }
+
+                                        if (doIt) {
+
+                                            var tradingValue1 = canbeVal[0];
+                                            var tradingValue2 = canbeVal[1];
+
+                                            var p = tradingValue1.from;
+                                            var p1_1 = tradingValue1.to;
+                                            var p1_2 = tradingValue2.from;
+
+                                            var p1 = p1_1;
+
+                                            if (p1_2 < p1) {
+                                                p = (p1_2 / p1_1) * p;
+                                                p1 = p1_2;
+                                            }
+
+                                            texts.push(p.toFixed(5) + ' ' + (
+                                                this_symbols[0] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : this_symbols[0]
+                                            ));
+
+                                            texts.push(p1.toFixed(5) + ' ' + (
+                                                this_symbols[1] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : this_symbols[1]
+                                            ));
+
+                                        }
+                                    }
+
                                     var usdtBuy = 3400;
                                     var usdtSell = 3600;
 
@@ -649,9 +763,21 @@
                                     var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
                                     texts.push(colorChange(transaction8, usdtSell));
 
+                                    if (transaction8 >= usdtSell) {
+                                        TransactionNumberV54123([
+                                            'USDT', 'MNFT', 'MNT'
+                                        ], usdtSell, false)
+                                    }
+
                                     texts.push('MNT => MNFT => USDT');
                                     var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
                                     texts.push(colorChange(transaction9, usdtBuy, 'left'));
+
+                                    if (transaction9 <= usdtBuy) {
+                                        TransactionNumberV54123([
+                                            'MNT', 'MNFT', 'USDT'
+                                        ], usdtBuy, true)
+                                    }
 
                                     texts.push('--------------------------------------------------------');
 
