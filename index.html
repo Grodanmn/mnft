@@ -14,7 +14,7 @@
             style="font-size: 2rem;background-color: deepskyblue;"/>
         <ul id="myul"></ul>
         <ul id="myul1"></ul>
-        <input type="number" id="USDTPrice" value="3400"/>
+        <input type="number" id="USDTPrice" value="3500"/>
         <input type="number" id="mylabel"/>
         <script
             src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -32,9 +32,11 @@
                     '3RcNkx2SzlhK9SgPsmQfkm/HHRCPd/0ucj0yuvpIOK1lFKM6nj';
 
             var urls = [
-                'https://api2.complex.mn/api/v1/blockchain/markets/MNFT-MNTC/orderbook', 'https://api2.complex.mn/api/v1/blockchain/markets/USDT-MNTC/orderbook', 'https://api2.complex.mn/api/v1/blockchain/markets/MNFT-USDT/orderbook',
-                // 'https://api2.complex.mn/api/v1/blockchain/markets/ARDX-USDT/orderbook',
-                // 'https://api2.complex.mn/api/v1/blockchain/markets/ARDX-MNTC/orderbook',
+                'https://api2.complex.mn/api/v1/blockchain/markets/MNFT-MNTC/orderbook',
+                'https://api2.complex.mn/api/v1/blockchain/markets/USDT-MNTC/orderbook',
+                'https://api2.complex.mn/api/v1/blockchain/markets/MNFT-USDT/orderbook',
+                'https://api2.complex.mn/api/v1/blockchain/markets/ARDX-USDT/orderbook',
+                'https://api2.complex.mn/api/v1/blockchain/markets/ARDX-MNTC/orderbook',
                 'https://api2.complex.mn/api/v1/user/get-rate/USDT'
             ];
 
@@ -79,24 +81,65 @@
                 return JSON.parse(t.toString(CryptoJS.enc.Utf8))
             };
 
-            var data = {
-                "direction": "BUY",
-                "marketName": "MNFT-USDT",
-                "limit": 0.00001218,
-                "quantity": 100000,
-                "timeForce": "GOOD_TIL_CANCELLED"
-            };
+            var data = '{"direction":"SELL","marketName":"MNFT-USDT","limit":0.0000196,"quantity":2500' +
+                    '00,"timeForce":"GOOD_TIL_CANCELLED"}';
+
+            data = '{"direction":"BUY","marketName":"ARDX-USDT","limit":0.00459,"quantity":3500,"t' +
+                    'imeForce":"GOOD_TIL_CANCELLED"}';
 
             var sendDat = {
-                encrypted: r0(data)
+                "encrypted": r0(data)
             };
 
             console.log(sendDat)
+
             var se = {
                 "encrypted": "U2FsdGVkX1/ckxqMMPE+hBs/y4wYl2DkMSRY6TTpsgTeTKzYjZpXgZTUh9SjKuJuqEg8VlIcUALIu8" +
                         "GgS+w0ZLTFCMUK0h77OomcuqiBWSUzs6V4cevrXPZH/XsWqRo+JmfX5mM5Ty69TsYi/g5mbcHD80FB" +
                         "KqDQVf76dnzkqVSBAhUWobycY2wFnu8b9RxJ"
             };
+
+            console.log($4(
+                'U2FsdGVkX1+m5Cq38oupr25o4sInOLdfh0u2c+jrGLc3HVGZvKn9QNHXqgN7gtsluBf0okI2bIIW5w' +
+                'l5TLZNJtVL4JfigTOYPI2J4FOXmb12merB7iQEwne1XSVKYvhfYIznLne0IFS+EFbhPK7kTv39bsH+' +
+                'mEX4QGld3mJBLuwv95KmIfJVNLeICHlrez2tUMIjzAwPmBdD9UqlPYvxgiw7nAg647Us+sub7PAItU' +
+                'y5bfK7uX1Z1AAPucTVDrC/Tqgg+PtU5sxrdUhxKNPxcJkvaVVUSwEbdLlstCEvCgNt3nDYz9eyXnQD' +
+                'hWiVDib9T/7wUBRWd3l2z0cuKCqUWEKusG2Xv5GUQNZA4BkP07iR+BbZMAHZ+UAb1LgNPBQ0BgvqkG' +
+                '590fRSJk3p8T3o2mcHqQ8awXpyatbtURVLGm4RZa49XMrLV7nmpFiTcoAwVQt6BBxC0Kkr1rqKdkag' +
+                '5WMl92kNyZ2Qwz8Zw82u4nzbnXXQih9Lzot3n10uYBYY94bAnxrIcLLKGYcO+a5ysiYsM/CkXIVTBW' +
+                'H4ReRBmQhe0gmWJxiw/u0BFe0Gj369wwhAKSy1V0kdRN6YbkCc+/Obx9ALdhaCHm9CjkaIhXfM2Wu2' +
+                'WQW0UQH+IseQ6bgtpPN3betc687c9eNkrTnzqYazyItyiXqXohmKnQ62jBcQstSJwdwbFw68SljblT' +
+                'zAOwEBso8BhaQSszzTSC0XfKQgLyYDmYYpUQ4q9ZbIEbPbqhZtkBDnfCwVLVJ3hh9lzlFJTcn6qRYh' +
+                'gl8ywYiujrmRKl+67xyVMm5DKBHadkNv5xzTQfHeVYXYmJccMNWzsCo1ICBBTDAAlpMwmDAvsS0Prc' +
+                '4pKdrRowj9gnHHoRDoiUOT49VDRCMRgoWkQHG9ppHBT9ypahD2GlZ002Oom1uL5HY/fvZ6fgrKdMwV' +
+                'L2WyuQdO1wN87BldOxMi7k/Qpq0edynwo5Hl5XEP9jyJbNTsUL/laYwOR4xcu8msQCwrtgkMSWrdKT' +
+                '/THokw3gA2shsO2qnxIIjOKQIAJTqxlkYA/vmIKEHfx0x31Uq99jecMxoTxBOctxCRyky7V7QXSiHa' +
+                'QaOcpDmsqKuQNZQwXgt3pePTktzTHfXd0Jz4Y6C/0RpDLRhErN/rnRDg6XjLSM+lbz/ng3m5YEpwSn' +
+                'OmKYffbXY+qX4fh/ANcGTP6ViOWZXlVfZlZqz9aJzgD7UTOlCikEhNBATfgNinxS8iF1LaP3+gaLrn' +
+                'Uzq0XA45fSJsguxfc/WP/HZ4EnJn6Q1IX5QiiG6+KPwAw+s9kqA6UpgrjFEBHIgGCn77yIxUttqbu7' +
+                'ThF0zcP8j5VRV92QUYFb8S7gLwgmtcXy87a/jwkh8jAoqPzVsLF1rMKO8ydpOCONwwGFGcJCiz/Hyg' +
+                'nd7M+TAhbhUF5BhlZ0bWRSUwIUBW4DnEsHFX3VLskvprc4lsHlSJx/H0gkjU59EbOmOC5T/g5cGyuu' +
+                'RDBEFJLlGENfTbCoC4CwanJ/6dcWKZsrVFI6ZmQKf+I0ik78zyIDjc87PT2FAeDcvPec/i4pSKXgi+' +
+                'Ukcf600+3htEiKc7R1WghRDDSa3FEk9TmDf7SGSplHlPsVZRgBc/7pwQvXGQkFE1Z26PfgKHo9FNUw' +
+                'r2dNIJJRUd5VrJ+O58ksXmPJAIy5ljCWsxPt2TOjXS7BgOrXCU079zGYUpkxEbPE3fwmsBOAVNFLZo' +
+                '0Z+lIQFpKltmn7sZPE4UL1UhetCalzrDgPchgdxZVLd3JAOq499skY0r+Z/N4p7aCrMeEapwd4Wtnc' +
+                'TgcdbvVI5quNp9KCLu31N54NY+QdFRM2QFA++od66U7VSJOgY0O9DW3NHbqN3c4PdRwE8QH58XPat9' +
+                'Yv4Rv2YROXX97SanieYYx6BSYaqruyRFUDPloW5GlUMk/iifzuQTi/TzfFybpnD6xdWx599fWT/Pty' +
+                'BweEx/1pEX2UfjwhAE8hDEvxHVBhAO6OgQyHjZX3RUh373OzQbAbI3esHO2Oram/+PqWZrbZCEic1V' +
+                'E6sNhM0oejojdB/sMKrHtiQ6UVs7ejq0EirTwaahDGtmRfZ6Gn4MOzK4ZEg4GO0='
+            ))
+
+            // console.log($4(
+            // 'U2FsdGVkX1/YNydBtlKVhJrX8G9niwH/42UQVApO4oQMPFU2mIwZ4uxZrDTWeYdTkihU/2fm0B2ynV'
+            // +
+            // '19AJDhS69ilM/+/ur2w60GMtHxD8i2sq+lxfD0eNRptHDW0Qn4qsg9iYOk9uVRf1cfmFkx5ptPGQlC'
+            // +     'MuVWHhu5BINjTejZngc1FyWNER7xgp2xqaHXr6tms+j0SNn6e1xE0y9vuw==' ))
+            // console.log($4(
+            // 'U2FsdGVkX19/w79BvXf8dT6eL4BMSH7f6Fs0LarsgHtOEnnn2VsTfsrcrAyo78nusX7yhR19QqgKYu7YJwxEX3AiZ1KYnPD53jFWLmnyTd4IISwPIlpeBr46QXtDP23KydVUCNajGY8fLCPjhukZih8r8rljMfuk1T3v7OVtty2jFKX4lg6ttzoczJaFcJ2SqATTak4XN50oWzK/GhYBHyzbFCd2alySD6GxgRMcov7n9K+c2nw+uqTfAvB60FASfwGidevADalUeyWeEQzhE15+b5KeraTVBh6hUT1oOkyaC2UCcfd5nvhmpkXAEGCh2rmSyY7Z2Ksg5sBIGIY95kxhpcfhWQQEgng3xzahImVcGP8NW5q1kXGhCFE94haW1+M2052y06+a6jUydmftmR4RFHNNKbwk+nrcPEq70NF97cbhHHTeRB5Rc6y1fstojhgIUg34XSsqSzgF43m1dLBSsLp4FzaVAaj290VMbhOOXTsVzb4AFbJ6DJ49oMGh3OizsN8+RWWO9CFSClF6MtCkI3muo8+KQfujRYhFlmal6Y5cvngxPVnhQTv4mKkFXU1UKGZrNAMepxi1YtMabU/ZXHhksIFv8yC6VUK2y5zzQl95/vZEnTdZAgmhxpVJ1jjM0NmCmPrU4L9GLNOzbOZTw7aMX0ArchYG7CxPDP9WHYG77rZfAt1cAvytfeRC'
+            // )); console.log($4(
+            // 'U2FsdGVkX1/wdKuhigIm8fxJ1XtmgDiPGZ9b75pPOtk1Naw5YX1xlQqpxIviVz0mi2XFdqxKjDZCtHgSFkH+hJmmZvKFTYLpLLm8bI3Ys+8M82dRk1NKG6T2QcJLoHv3ITfTYpnlZXO1bmcw1325JvUIK3vtOCe/XHJUQ+d4wE4='
+            // ));
+            // console.log($4("U2FsdGVkX18Si2At0p/Co40ABkN3HfmAzBKkLqc99lsR7c/CIo03Cr/ewp5x/ylgMDTUHTxwJJz4BKL9yXoxiUu67ChJ1TCJCpUi6ANjr8ytQ6fifstuFijAziTqjhAeYH8ro/TOb7m/i+E8L5arNsA0s5k3vsydPDDtya+YsK9pJOwIvVmAOSGFhMKviD8E"))
 
             function getCookie(cname) {
                 let name = cname + "=";
@@ -118,9 +161,13 @@
                 var client = new XMLHttpRequest();
                 client.open('POST', 'https://api2.complex.mn/api/v1/user/orders/limit')
                 client.setRequestHeader('authorization', 'Bearer ' + getCookie('token'));
+                client.setRequestHeader('deviceid', localStorage.getItem('deviceId'));
+                client.setRequestHeader('Accept', 'application/json, text/plain, */*');
+                client.setRequestHeader('Accept-Language', 'en-US,en;q=0.9');
                 client.setRequestHeader('Content-Type', 'application/json');
                 client.send(JSON.stringify(sendData))
             }
+
             const CallAjax = (opt) => {
                 const xhr = new XMLHttpRequest();
 
@@ -159,6 +206,20 @@
                     xhr.send();
                 }
             };
+
+            var datase = ['https://api2.complex.mn/api/v1/contest_board/list_user?contestId=635b78509762c' +
+                    '8e0f69217a2'];
+
+            datase.forEach(dat => {
+                CallAjax({
+                    type: 'GET',
+                    url: dat,
+                    f: (res) => {
+                        var result = $4(res.encrypted);
+                        console.log(result['data'])
+                    }
+                });
+            });
 
             var init = () => {
 
@@ -246,6 +307,9 @@
                                 i++;
                                 if (i == urls.length) {
                                     console.log(datos)
+
+                                    console.log(datos['MU']['datas']);
+
                                     var MM = datos.MM;
                                     var MU = datos.MU;
                                     var UM = datos.UM;
@@ -253,17 +317,19 @@
                                     var AU = datos.AU;
                                     var WU = datos.WU;
 
-                                    var tran = 0.9975;
+                                    var tran = 0.9983;
 
                                     function trade(from, to, value) {
                                         if (to == 'WALLET') {
-                                            to = 'USDT';
+                                            //to = 'USDT';
                                         }
                                         if (from == 'MNT') {
                                             if (to == 'MNFT') {
                                                 return (value / MM.ask * tran);
                                             } else if (to == 'USDT') {
                                                 return (value / UM.ask * tran);
+                                            } else if (to == 'WALLET') {
+                                                return (value / UM.ask * 1);
                                             } else if (to == 'ARDX') {
                                                 return (value / AM.ask * tran);
                                             }
@@ -272,6 +338,8 @@
                                                 return (value * MM.bid * tran);
                                             } else if (to == 'USDT') {
                                                 return (value * MU.bid * tran);
+                                            } else if (to == 'WALLET') {
+                                                return (value * MU.bid * 1);
                                             }
                                         } else if (from == 'USDT') {
                                             if (to == 'MNFT') {
@@ -286,6 +354,8 @@
                                                 return (value * AM.bid * tran);
                                             } else if (to == 'USDT') {
                                                 return (value * AU.bid * tran);
+                                            }else if (to == 'WALLET') {
+                                                return (value * AU.bid * 1);
                                             }
                                         } else if (from == 'WALLET') {
                                             if (to == 'USDT') {
@@ -330,6 +400,9 @@
                                                 return (value * AU.datas.bids[i]['rate'] * tran);
                                             }
                                         } else if (from == 'WALLET') {
+                                            if(i!=0){
+                                                return 0
+                                            }
                                             if (to == 'USDT') {
                                                 return (value / WU.bid);
                                             } else if (to == 'MNT') {
@@ -345,6 +418,11 @@
                                                 return {
                                                     from: (MM.ask * MM.askV),
                                                     to: MM.askV
+                                                }
+                                            } else if (to == 'ARDX') {
+                                                return {
+                                                    from: (AM.ask * AM.askV),
+                                                    to: AM.askV
                                                 }
                                             } else if (to == 'USDT') {
                                                 return {
@@ -364,11 +442,28 @@
                                                     to: (MU.bidV * MU.bid)
                                                 }
                                             }
+                                        } else if (from == 'ARDX') {
+                                            if (to == 'MNT') {
+                                                return {
+                                                    from: (AM.bidV),
+                                                    to: (AM.bidV * AM.bid)
+                                                }
+                                            } else if (to == 'USDT') {
+                                                return {
+                                                    from: (AU.bidV),
+                                                    to: (AU.bidV * AU.bid)
+                                                }
+                                            }
                                         } else if (from == 'USDT') {
                                             if (to == 'MNFT') {
                                                 return {
                                                     from: (MU.ask * MU.askV),
                                                     to: MU.askV
+                                                }
+                                            } else if (to == 'ARDX') {
+                                                return {
+                                                    from: (AU.ask * AU.askV),
+                                                    to: AU.askV
                                                 }
                                             } else if (to == 'MNT') {
                                                 return {
@@ -395,6 +490,13 @@
                                                         .datas
                                                         .asks[i]['quantity']
                                                 }
+                                            } else if (to == 'ARDX') {
+                                                return {
+                                                    from: (AM.datas.asks[i]['rate'] * AM.datas.asks[i]['quantity']),
+                                                    to: AM
+                                                        .datas
+                                                        .asks[i]['quantity']
+                                                }
                                             } else if (to == 'USDT') {
                                                 return {
                                                     from: (UM.datas.asks[i]['rate'] * UM.datas.asks[i]['quantity']),
@@ -415,11 +517,30 @@
                                                     to: (MU.datas.bids[i]['quantity'] * MU.datas.bids[i]['rate'])
                                                 }
                                             }
+                                        } else if (from == 'ARDX') {
+                                            if (to == 'MNT') {
+                                                return {
+                                                    from: (AM.datas.bids[i]['quantity']),
+                                                    to: (AM.datas.bids[i]['quantity'] * AM.datas.bids[i]['rate'])
+                                                }
+                                            } else if (to == 'USDT') {
+                                                return {
+                                                    from: (AU.datas.bids[i]['quantity']),
+                                                    to: (AU.datas.bids[i]['quantity'] * AU.datas.bids[i]['rate'])
+                                                }
+                                            }
                                         } else if (from == 'USDT') {
                                             if (to == 'MNFT') {
                                                 return {
                                                     from: (MU.datas.asks[i]['rate'] * MU.datas.asks[i]['quantity']),
                                                     to: MU
+                                                        .datas
+                                                        .asks[i]['quantity']
+                                                }
+                                            } else if (to == 'ARDX') {
+                                                return {
+                                                    from: (AU.datas.asks[i]['rate'] * AU.datas.asks[i]['quantity']),
+                                                    to: AU
                                                         .datas
                                                         .asks[i]['quantity']
                                                 }
@@ -738,42 +859,335 @@
                                         }
                                     }
 
-                                    var usdtBuy = 3400;
+                                    var usdtBuy = 3500;
                                     var usdtSell = 3600;
 
                                     texts.push('--------------------------------------------------------');
 
-                                    texts.push('WALLET => MNT');
+                                    function TransactionNumber122() {
+
+                                        texts.push('MNT => ARDX => USDT => MNT');
+                                        var transaction1 = trade(
+                                            'USDT',
+                                            'MNT',
+                                            trade('ARDX', 'USDT', trade('MNT', 'ARDX', MNT))
+                                        );
+                                        texts.push(colorChange(transaction1, perc));
+
+                                        if (transaction1 > perc) {
+
+                                            var tradingValue1 = tradableValue('MNT', 'ARDX');
+                                            var tradingValue2 = tradableValue('ARDX', 'USDT');
+                                            var tradingValue3 = tradableValue('USDT', 'MNT');
+
+                                            var p = tradingValue1.from;
+                                            var p1_1 = tradingValue1.to;
+                                            var p1_2 = tradingValue2.from;
+                                            var p2_1 = tradingValue2.to;
+                                            var p2_2 = tradingValue3.from;
+
+                                            var p1 = p1_1;
+                                            var p2 = p2_1;
+
+                                            if (p1_2 < p1) {
+                                                p = (p1_2 / p1_1) * p;
+                                                p1 = p1_2;
+                                            }
+
+                                            if (p2_2 < p2_1) {
+                                                p = (p2_2 / p2_1) * p;
+                                                p1 = (p2_2 / p2_1) * p1;
+                                                p2 = p2_2;
+                                            }
+
+                                            texts.push(p + ' MNT');
+
+                                        }
+
+                                    }
+
+                                    TransactionNumber122();
+
+                                    texts.push('MNT => USDT => ARDX => MNT');
+                                    var transaction2 = trade(
+                                        'ARDX',
+                                        'MNT',
+                                        trade('USDT', 'ARDX', trade('MNT', 'USDT', MNT))
+                                    );
+                                    texts.push(colorChange(transaction2, perc));
+
+                                    if (transaction2 > perc) {
+
+                                        var tradingValue1 = tradableValue('MNT', 'USDT');
+                                        var tradingValue2 = tradableValue('USDT', 'ARDX');
+                                        var tradingValue3 = tradableValue('ARDX', 'MNT');
+
+                                        var p = tradingValue1.from;
+                                        var p1_1 = tradingValue1.to;
+                                        var p1_2 = tradingValue2.from;
+                                        var p2_1 = tradingValue2.to;
+                                        var p2_2 = tradingValue3.from;
+
+                                        var p1 = p1_1;
+                                        var p2 = p2_1;
+
+                                        if (p1_2 < p1) {
+                                            p = (p1_2 / p1_1) * p;
+                                            p1 = p1_2;
+                                        }
+
+                                        if (p2_2 < p2_1) {
+                                            p = (p2_2 / p2_1) * p;
+                                            p1 = (p2_2 / p2_1) * p1;
+                                            p2 = p2_2;
+                                        }
+
+                                        texts.push(p + ' MNT');
+
+                                    }
+
+                                    texts.push('MNT => ARDX => WALLET => MNT');
+                                    var transaction4 = trade(
+                                        'WALLET',
+                                        'MNT',
+                                        trade('ARDX', 'USDT', trade('MNT', 'ARDX', MNT))
+                                    );
+                                    texts.push(colorChange(transaction4, perc));
+
+                                    if (transaction4 > perc) {
+
+                                        var tradingValue1 = tradableValue('MNT', 'ARDX');
+                                        var tradingValue2 = tradableValue('ARDX', 'USDT');
+
+                                        var p = tradingValue1.from;
+                                        var p1_1 = tradingValue1.to;
+                                        var p1_2 = tradingValue2.from;
+                                        var p2_1 = tradingValue2.to;
+                                        var p2_2 = tradingValue2.to;
+
+                                        var p1 = p1_1;
+                                        var p2 = p2_1;
+
+                                        if (p1_2 < p1) {
+                                            p = (p1_2 / p1_1) * p;
+                                            p1 = p1_2;
+                                        }
+
+                                        if (p2_2 < p2_1) {
+                                            p = (p2_2 / p2_1) * p;
+                                            p1 = (p2_2 / p2_1) * p1;
+                                            p2 = p2_2;
+                                        }
+
+                                        texts.push(p + ' MNT');
+                                    }
+
+                                    texts.push('WALLET => USDT => ARDX => MNT');
+                                    var transaction3 = trade(
+                                        'ARDX',
+                                        'MNT',
+                                        trade('USDT', 'ARDX', trade('WALLET', 'USDT', MNT))
+                                    );
+                                    texts.push(colorChange(transaction3, perc));
+
+                                    if (transaction3 > perc) {
+
+                                        var tradingValue2 = tradableValue('USDT', 'ARDX');
+                                        var tradingValue3 = tradableValue('ARDX', 'MNT');
+
+                                        var p = tradingValue2.from * WU.bid;
+                                        var p1_1 = tradingValue2.from;
+                                        var p1_2 = tradingValue2.from;
+                                        var p2_1 = tradingValue2.to;
+                                        var p2_2 = tradingValue3.from;
+
+                                        var p1 = p1_1;
+                                        var p2 = p2_1;
+
+                                        if (p1_2 < p1) {
+                                            p = (p1_2 / p1_1) * p;
+                                            p1 = p1_2;
+                                        }
+
+                                        if (p2_2 < p2_1) {
+                                            p = (p2_2 / p2_1) * p;
+                                            p1 = (p2_2 / p2_1) * p1;
+                                            p2 = p2_2;
+                                        }
+
+                                        texts.push(p + ' MNT');
+                                    }
+
+                                    // texts.push('ARDX=>WALLET=>MNT=>ARDX');
+                                    var transaction5 = trade(
+                                        'MNT',
+                                        'ARDX',
+                                        trade('WALLET', 'MNT', trade('ARDX', 'USDT', MNT))
+                                    );
+                                    // texts.push(colorChange(transaction5, 1)); texts.push('ARDX=>WALLET=>MNT');
+                                    var transaction6 = trade('WALLET', 'MNT', trade('ARDX', 'USDT', MNT) / MNT);
+                                    // texts.push(colorChange(transaction6, 1));
+
+                                    function TransactionNumberV54123(this_symbols, this_prece, this_l) {
+                                        var doIt = false;
+
+                                        function trans2F(symbols, prece, l, e1, e2) {
+                                            try {
+
+                                                if (l) {
+                                                    var tra = MNT / tradeV1(
+                                                        symbols[1],
+                                                        symbols[2],
+                                                        tradeV1(symbols[0], symbols[1], MNT, e1),
+                                                        e2
+                                                    );
+
+                                                    if (tra <= prece) {
+                                                        return true;
+                                                    }
+                                                } else {
+                                                    var tra = tradeV1(
+                                                        symbols[1],
+                                                        symbols[2],
+                                                        tradeV1(symbols[0], symbols[1], MNT, e1),
+                                                        e2
+                                                    );
+
+                                                    if (tra >= prece) {
+                                                        return true;
+                                                    }
+                                                }
+                                                return false;
+                                            } catch (error) {
+                                                return false;
+                                            }
+
+                                        }
+
+                                        var canbe = [[], []];
+                                        var canbeVal = [
+                                            {
+                                                from: 0,
+                                                to: 0
+                                            }, {
+                                                from: 0,
+                                                to: 0
+                                            }
+                                        ];
+
+                                        var fr = countToCall;
+
+                                        var last = null;
+
+                                        for (var l1 = 0; l1 < fr; l1++) {
+                                            for (var l2 = 0; l2 < fr; l2++) {
+
+                                                var tre = trans2F([
+                                                    this_symbols[0], this_symbols[1], this_symbols[2]
+                                                ], this_prece, this_l, l1, l2);
+
+                                                if (tre) {
+                                                    doIt = true;
+                                                    if (canbe[0].indexOf(l1) < 0) {
+                                                        canbe[0].push(l1);
+                                                        var val = tradableValueV1(this_symbols[0], this_symbols[1], l1);
+                                                        canbeVal[0]['from'] += parseFloat(val['from']);
+                                                        canbeVal[0]['to'] += parseFloat(val['to']);
+                                                    }
+                                                    if (canbe[1].indexOf(l2) < 0) {
+                                                        canbe[1].push(l2);
+                                                        var val = tradableValueV1(this_symbols[1], this_symbols[2], l2);
+                                                        canbeVal[1]['from'] += parseFloat(val['from']);
+                                                        canbeVal[1]['to'] += parseFloat(val['to']);
+                                                    }
+                                                    last = tradeV1(
+                                                        this_symbols[1],
+                                                        this_symbols[2],
+                                                        tradeV1(this_symbols[0], this_symbols[1], MNT, l1),
+                                                        l2
+                                                    );
+
+                                                }
+                                            }
+                                        }
+
+                                        if (doIt) {
+
+                                            var tradingValue1 = canbeVal[0];
+                                            var tradingValue2 = canbeVal[1];
+
+                                            var p = tradingValue1.from;
+                                            var p1_1 = tradingValue1.to;
+                                            var p1_2 = tradingValue2.from;
+
+                                            var p1 = p1_1;
+
+                                            if (p1_2 < p1) {
+                                                p = (p1_2 / p1_1) * p;
+                                                p1 = p1_2;
+                                            }
+
+                                            texts.push(p.toFixed(5) + ' ' + (
+                                                this_symbols[0] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : this_symbols[0]
+                                            ));
+
+                                            texts.push(p1.toFixed(5) + ' ' + (
+                                                this_symbols[1] == 'WALLET'
+                                                    ? 'MNT'
+                                                    : this_symbols[1]
+                                            ));
+
+                                        }
+                                    }
+
+                                    texts.push('--------------------------------------------------------');
+
                                     var transaction7 = trade('WALLET', 'MNT', MNT) / MNT;
-                                    texts.push(colorChange(transaction7, usdtSell));
 
-                                    texts.push('WALLET => USDT');
+                                    if (transaction7 > usdtSell) {
+                                        texts.push('WALLET => MNT');
+                                        texts.push(colorChange(transaction7, usdtSell));
+                                    }
+
                                     var transaction10 = MNT / trade('WALLET', 'USDT', MNT);
-                                    texts.push(colorChange(transaction10, usdtBuy, "left"));
 
-                                    texts.push('USDT => MNT');
+                                    if (transaction10 < usdtBuy) {
+                                        texts.push('WALLET => USDT');
+                                        texts.push(colorChange(transaction10, usdtBuy, "left"));
+                                    }
+
                                     var transaction11 = trade('USDT', 'MNT', MNT) / MNT;
-                                    texts.push(colorChange(transaction11, usdtSell));
 
-                                    texts.push('MNT => USDT');
+                                    if (transaction11 > usdtSell) {
+                                        texts.push('USDT => MNT');
+                                        texts.push(colorChange(transaction11, usdtSell));
+                                    }
+
                                     var transaction12 = MNT / trade('MNT', 'USDT', MNT);
-                                    texts.push(colorChange(transaction12, usdtBuy, 'left'));
 
-                                    texts.push('USDT => MNFT => MNT');
+                                    if (transaction12 < usdtBuy) {
+                                        texts.push('MNT => USDT');
+                                        texts.push(colorChange(transaction12, usdtBuy, 'left'));
+                                    }
+
                                     var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
-                                    texts.push(colorChange(transaction8, usdtSell));
 
                                     if (transaction8 >= usdtSell) {
+                                        texts.push('USDT => MNFT => MNT');
+                                        texts.push(colorChange(transaction8, usdtSell));
+
                                         TransactionNumberV54123([
                                             'USDT', 'MNFT', 'MNT'
                                         ], usdtSell, false)
                                     }
 
-                                    texts.push('MNT => MNFT => USDT');
                                     var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
-                                    texts.push(colorChange(transaction9, usdtBuy, 'left'));
 
                                     if (transaction9 <= usdtBuy) {
+                                        texts.push('MNT => MNFT => USDT');
+                                        texts.push(colorChange(transaction9, usdtBuy, 'left'));
                                         TransactionNumberV54123([
                                             'MNT', 'MNFT', 'USDT'
                                         ], usdtBuy, true)
@@ -781,19 +1195,51 @@
 
                                     texts.push('--------------------------------------------------------');
 
-                                    texts.push('MNT => USDT => MNFT');
-                                    var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'USDT', MNT));
-                                    texts.push(colorChange(transaction91, 0.04, 'left'));
+                                    var transaction8 = trade('ARDX', 'MNT', trade('USDT', 'ARDX', MNT)) / MNT;
 
-                                    texts.push('MNT => WALLET => MNFT');
-                                    var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'WALLET', MNT));
-                                    texts.push(colorChange(transaction91, 0.04, 'left'));
+                                    if (transaction8 >= usdtSell) {
+                                        texts.push('USDT => ARDX => MNT');
+                                        texts.push(colorChange(transaction8, usdtSell));
+
+                                        TransactionNumberV54123([
+                                            'USDT', 'ARDX', 'MNT'
+                                        ], usdtSell, false)
+                                    }
+
+                                    var transaction9 = MNT / trade('ARDX', 'USDT', trade('MNT', 'ARDX', MNT));
+
+                                    if (transaction9 <= usdtBuy) {
+                                        texts.push('MNT => ARDX => USDT');
+                                        texts.push(colorChange(transaction9, usdtBuy, 'left'));
+                                        TransactionNumberV54123([
+                                            'MNT', 'ARDX', 'USDT'
+                                        ], usdtBuy, true)
+                                    }
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'USDT', MNT));
+
+                                    if (transaction91 < 0.04) {
+
+                                        texts.push('MNT => USDT => MNFT');
+                                        texts.push(colorChange(transaction91, 0.04, 'left'));
+
+                                    }
+
+                                    var transaction911 = MNT / trade('USDT', 'MNFT', trade('MNT', 'WALLET', MNT));
+
+                                    if (transaction911 < 0.04) {
+
+                                        texts.push('MNT => WALLET => MNFT');
+                                        texts.push(colorChange(transaction911, 0.04, 'left'));
+
+                                    }
 
                                     texts.push('--------------------------------------------------------');
 
                                     function TransactionNumberV1(symbols) {
 
-                                        texts.push(`${symbols[0]} => ${symbols[1]} => ${symbols[2]} => ${symbols[3]}`);
                                         var transaction1 = trade(
                                             symbols[2],
                                             symbols[3],
@@ -802,6 +1248,7 @@
                                         var doIt = false;
 
                                         var canbe = [[], [], []];
+
                                         var canbeVal = [
                                             {
                                                 from: 0,
@@ -823,6 +1270,7 @@
                                                     tradeV1(symbols[1], symbols[2], tradeV1(symbols[0], symbols[1], MNT, e1), e2),
                                                     e3
                                                 );
+                                                
                                                 if (tra > perc) {
                                                     return true;
                                                 }
@@ -840,36 +1288,46 @@
                                                 for (var l3 = 0; l3 < countToCall; l3++) {
                                                     if (trans1F(l1, l2, l3)) {
                                                         doIt = true;
+                                                        
                                                         if (canbe[0].indexOf(l1) < 0) {
                                                             canbe[0].push(l1);
                                                             var val = tradableValueV1(symbols[0], symbols[1], l1);
                                                             canbeVal[0]['from'] += parseFloat(val['from']);
                                                             canbeVal[0]['to'] += parseFloat(val['to']);
                                                         }
+
                                                         if (canbe[1].indexOf(l2) < 0) {
                                                             canbe[1].push(l2);
                                                             var val = tradableValueV1(symbols[1], symbols[2], l2);
                                                             canbeVal[1]['from'] += parseFloat(val['from']);
                                                             canbeVal[1]['to'] += parseFloat(val['to']);
                                                         }
+
                                                         if (canbe[2].indexOf(l2) < 0) {
                                                             canbe[2].push(l2);
                                                             var val = tradableValueV1(symbols[2], symbols[3], l3);
                                                             canbeVal[2]['from'] += parseFloat(val['from']);
                                                             canbeVal[2]['to'] += parseFloat(val['to']);
                                                         }
+
                                                         last = tradeV1(
                                                             symbols[2],
                                                             symbols[3],
                                                             tradeV1(symbols[1], symbols[2], tradeV1(symbols[0], symbols[1], MNT, l1), l2),
                                                             l3
                                                         );
+
                                                     }
                                                 }
                                             }
                                         }
 
-                                        texts.push(colorChange(last, perc));
+                                        if (last > perc) {
+
+                                            texts.push(`${symbols[0]} => ${symbols[1]} => ${symbols[2]} => ${symbols[3]}`);
+
+                                            texts.push(colorChange(last, perc));
+                                        }
 
                                         if (doIt) {
 
@@ -928,6 +1386,16 @@
                                     TransactionNumberV1(['MNT', 'MNFT', 'WALLET', 'MNT'])
 
                                     TransactionNumberV1(['WALLET', 'USDT', 'MNFT', 'MNT'])
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    TransactionNumberV1(['MNT', 'ARDX', 'USDT', 'MNT'])
+
+                                    TransactionNumberV1(['MNT', 'USDT', 'ARDX', 'MNT'])
+
+                                    TransactionNumberV1(['MNT', 'ARDX', 'WALLET', 'MNT'])
+
+                                    TransactionNumberV1(['WALLET', 'USDT', 'ARDX', 'MNT'])
 
                                     texts.forEach(text => {
                                         $('#myul').append('<li>' + text + '</li>')
