@@ -1146,31 +1146,31 @@
 
                                     var transaction7 = trade('WALLET', 'MNT', MNT) / MNT;
 
-                                    if (transaction7 > usdtSell) {
+                                    //if (transaction7 > usdtSell) {
                                         texts.push('WALLET => MNT');
                                         texts.push(colorChange(transaction7, usdtSell));
-                                    }
+                                    //}
 
                                     var transaction10 = MNT / trade('WALLET', 'USDT', MNT);
 
-                                    if (transaction10 < usdtBuy) {
+                                    //if (transaction10 < usdtBuy) {
                                         texts.push('WALLET => USDT');
                                         texts.push(colorChange(transaction10, usdtBuy, "left"));
-                                    }
+                                    //}
 
                                     var transaction11 = trade('USDT', 'MNT', MNT) / MNT;
 
-                                    if (transaction11 > usdtSell) {
+                                    //if (transaction11 > usdtSell) {
                                         texts.push('USDT => MNT');
                                         texts.push(colorChange(transaction11, usdtSell));
-                                    }
+                                    //}
 
                                     var transaction12 = MNT / trade('MNT', 'USDT', MNT);
 
-                                    if (transaction12 < usdtBuy) {
+                                    //if (transaction12 < usdtBuy) {
                                         texts.push('MNT => USDT');
                                         texts.push(colorChange(transaction12, usdtBuy, 'left'));
-                                    }
+                                    //}
 
                                     var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
 
