@@ -860,7 +860,7 @@
                                         }
                                     }
 
-                                    var usdtBuy = 3500;
+                                    var usdtBuy = 3400;
                                     var usdtSell = 3600;
 
                                     texts.push('--------------------------------------------------------');
@@ -1175,24 +1175,24 @@
 
                                     var transaction8 = trade('MNFT', 'MNT', trade('USDT', 'MNFT', MNT)) / MNT;
 
-                                    if (transaction8 >= usdtSell) {
+                                    //if (transaction8 >= usdtSell) {
                                         texts.push('USDT => MNFT => MNT');
                                         texts.push(colorChange(transaction8, usdtSell));
 
                                         TransactionNumberV54123([
                                             'USDT', 'MNFT', 'MNT'
                                         ], usdtSell, false)
-                                    }
+                                    //}
 
                                     var transaction9 = MNT / trade('MNFT', 'USDT', trade('MNT', 'MNFT', MNT));
 
-                                    if (transaction9 <= usdtBuy) {
+                                    //if (transaction9 <= usdtBuy) {
                                         texts.push('MNT => MNFT => USDT');
                                         texts.push(colorChange(transaction9, usdtBuy, 'left'));
                                         TransactionNumberV54123([
                                             'MNT', 'MNFT', 'USDT'
                                         ], usdtBuy, true)
-                                    }
+                                    //}
 
                                     texts.push('--------------------------------------------------------');
 
@@ -1221,21 +1221,41 @@
 
                                     var transaction91 = MNT / trade('USDT', 'MNFT', trade('MNT', 'USDT', MNT));
 
-                                    if (transaction91 < 0.04) {
+                                    //if (transaction91 < 0.04) {
 
                                         texts.push('MNT => USDT => MNFT');
                                         texts.push(colorChange(transaction91, 0.04, 'left'));
 
-                                    }
+                                    //}
 
                                     var transaction911 = MNT / trade('USDT', 'MNFT', trade('MNT', 'WALLET', MNT));
 
-                                    if (transaction911 < 0.04) {
+                                    //if (transaction911 < 0.04) {
 
                                         texts.push('MNT => WALLET => MNFT');
                                         texts.push(colorChange(transaction911, 0.04, 'left'));
 
-                                    }
+                                    //}
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    var transaction92 = trade('USDT', 'MNT', trade('MNFT', 'USDT', MNT));
+
+                                    //if (transaction91 < 0.04) {
+
+                                        texts.push('MNFT => USDT => MNT');
+                                        texts.push(colorChange(transaction92, 0.06, 'right'));
+
+                                    //}
+
+                                    var transaction921 = trade('WALLET', 'MNT', trade('MNFT', 'USDT', MNT));
+
+                                    //if (transaction911 < 0.04) {
+
+                                        texts.push('MNT => WALLET => MNFT');
+                                        texts.push(colorChange(transaction921, 0.06, 'right'));
+
+                                    //}
 
                                     texts.push('--------------------------------------------------------');
 
