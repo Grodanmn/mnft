@@ -1239,6 +1239,26 @@
 
                                     texts.push('--------------------------------------------------------');
 
+                                    var transaction9121 = MNT / trade('USDT', 'ARDX', trade('MNT', 'USDT', MNT));
+
+                                    //if (transaction91 < 0.04) {
+
+                                        texts.push('MNT => USDT => ARDX');
+                                        texts.push(colorChange(transaction9121, 22, 'left'));
+
+                                    //}
+
+                                    var transaction91121 = MNT / trade('USDT', 'ARDX', trade('MNT', 'WALLET', MNT));
+
+                                    //if (transaction911 < 0.04) {
+
+                                        texts.push('MNT => WALLET => ARDX');
+                                        texts.push(colorChange(transaction91121, 22, 'left'));
+
+                                    //}
+
+                                    texts.push('--------------------------------------------------------');
+
                                     var transaction92 = trade('USDT', 'MNT', trade('MNFT', 'USDT', MNT));
 
                                     //if (transaction91 < 0.04) {
@@ -1252,8 +1272,28 @@
 
                                     //if (transaction911 < 0.04) {
 
-                                        texts.push('MNT => WALLET => MNFT');
+                                        texts.push('MNFT => WALLET => MNT');
                                         texts.push(colorChange(transaction921, 0.06, 'right'));
+
+                                    //}
+
+                                    texts.push('--------------------------------------------------------');
+
+                                    var transaction9221 = trade('USDT', 'MNT', trade('ARDX', 'USDT', MNT));
+
+                                    //if (transaction91 < 0.04) {
+
+                                        texts.push('ARDX => USDT => MNT');
+                                        texts.push(colorChange(transaction9221, 24, 'right'));
+
+                                    //}
+
+                                    var transaction92121 = trade('WALLET', 'MNT', trade('ARDX', 'USDT', MNT));
+
+                                    //if (transaction911 < 0.04) {
+
+                                        texts.push('ARDX => WALLET => MNT');
+                                        texts.push(colorChange(transaction92121, 24, 'right'));
 
                                     //}
 
